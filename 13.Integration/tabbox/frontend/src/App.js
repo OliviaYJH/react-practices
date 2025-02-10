@@ -1,10 +1,12 @@
 import React from 'react';
-import './assets/scss/App.scss';
+import './assets/css/styles.css';
+import data from './assets/json/data.js';
+import TabBox from './TabBox.js';
 
 function App(props) {
     return (
         <div id={'App'}>
-             Tabox 과제
+            <TabBox tabs={data.slice().reverse()}/>
         </div>
     );
 }
