@@ -1,48 +1,49 @@
 import React, {useRef} from 'react';
 import logo from './assets/images/react-logo.png';
 
+let count = 10;
+
 export default function App() {
+    const count = useRef(10);
 
-    const imgRef = useRef(null);
-
-    const onKeyDownInput = (e) => {
-        console.log('keydown: ' + e.target.value);
-    };
+    // const onKeyDownInput = (e) => {
+    //     console.log('keydown: ' + e.target.value);
+    // };
     
-    const onKeyUpInput = (e) => {
-        if(e.key ==='Enter') {
-            console.log('keyup: ' + e.target.value);
-        }
-    };
+    // const onKeyUpInput = (e) => {
+    //     if(e.key ==='Enter') {
+    //         console.log('keyup: ' + e.target.value);
+    //     }
+    // };
 
-    const onChangeInput = (e) => {
-        console.log('change: ' + e.target.value);
-    };
+    // const onChangeInput = (e) => {
+    //     console.log('change: ' + e.target.value);
+    // };
 
-    const onFocusInput = (e) => {
-        console.log('focus');
-    };
+    // const onFocusInput = (e) => {
+    //     console.log('focus');
+    // };
 
-    const onBlurInput = (e) => {
-        console.log('blur');
-    };
+    // const onBlurInput = (e) => {
+    //     console.log('blur');
+    // };
 
-    const onMouseOverImg = (e) => {
-        console.log(imgRef.current);
+    // const onMouseOverImg = (e) => {
+    //     console.log(imgRef.current);
 
-        const offsetTop = imgRef.current.offsetTop;
-        const offsetLeft = imgRef.current.offsetLeft;
+    //     const offsetTop = imgRef.current.offsetTop;
+    //     const offsetLeft = imgRef.current.offsetLeft;
 
-        console.log('mouseover', `x=${e.clientX - offsetLeft}, y=${e.clientY - offsetTop}`);
-    };
+    //     console.log('mouseover', `x=${e.clientX - offsetLeft}, y=${e.clientY - offsetTop}`);
+    // };
 
-    const onMouseMoveImg = (e) => {
-        console.log('mousemove', `x=${e.clientX}, y=${e.clientY}`);
-    };
+    // const onMouseMoveImg = (e) => {
+    //     console.log('mousemove', `x=${e.clientX}, y=${e.clientY}`);
+    // };
 
-    const onMouseOut = (e) => {
-        console.log('mouseout', `x=${e.clientX}, y=${e.clientY}`);
-    };
+    // const onMouseOut = (e) => {
+    //     console.log('mouseout', `x=${e.clientX}, y=${e.clientY}`);
+    // };
 
     return (
         <>

@@ -1,18 +1,22 @@
 import React from 'react';
-import './assets/css/styles.css';
 import TabItem from './TabItem';
+import styled from 'styled-components';
+
+const StyledUL = styled.ul`
+    height: 24px;
+`;
 
 function Tabs({tabs}) {
     return (
-        <ul>
-            {tabs.map((tab, index) =>
+        <StyledUL>
+            {tabs.map((tab) =>
                 <TabItem 
-                    key = {index}
+                    key = {tab.no}
                     name = {tab.name}
                     active = {tab.active}
                   />
             )}
-        </ul>
+        </StyledUL>
     );
 }
 

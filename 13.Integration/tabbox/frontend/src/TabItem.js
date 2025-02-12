@@ -1,9 +1,9 @@
 import React from 'react';
-import './assets/css/styles.css';
+import {Tab_Item} from './assets/scss/TabItem.scss';
 
 function TabItem({name, active}) {
     return (
-        <li className={active ? "active" : ""}>
+        <li className={[Tab_Item, (active ? 'active' : '')].join(' ')}>
             {name}
         </li>
     );
