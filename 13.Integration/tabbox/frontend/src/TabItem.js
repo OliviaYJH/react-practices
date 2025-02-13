@@ -1,15 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Tab_Item} from './assets/scss/TabItem.scss';
 
-function TabItem({name, active}) {
-    const [select, setSelect] = useState(active);
+function TabItem({name, active, setSelectTab, index}) {
 
     return (
         <li 
             className={[Tab_Item, active ? 'active' : ''].join(' ')}
-            onClick={() => {
-                setSelect(!select)
-            }}> 
+            onClick={() => setSelectTab(index)}> 
             {name}
         </li>
     );

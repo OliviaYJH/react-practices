@@ -6,7 +6,7 @@ const StyledUL = styled.ul`
     height: 24px;
 `;
 
-function Tabs({tabs}) {
+function Tabs({tabs, setSelectTab}) {
     return (
         <StyledUL>
             {tabs.map((tab) =>
@@ -14,6 +14,8 @@ function Tabs({tabs}) {
                     key = {tab.no}
                     name = {tab.name}
                     active = {tab.active}
+                    setSelectTab={setSelectTab}
+                    index = {tab.no}
                   />
             )}
         </StyledUL>
