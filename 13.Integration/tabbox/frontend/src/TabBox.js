@@ -5,27 +5,33 @@ import datas from './assets/json/data.js';
 import {Tab_Box} from './assets/scss/TabBox.scss';
 
 function TabBox(props) {
-    const data = datas.slice().reverse();
+    const [activeIndex, setActiveIndex] = useState(0);
 
-    const [selectTab, setSelectTab] = useState(0);
-    const [tabs, setTabs] = useState(data);
+    const selectTab = (no) => {
+        console.log(`${no} selected`);
 
-    const clickTab = (index) => {
-        console.log('current tab index', index);
-        const newTabs = tabs.map((tab) => ({
-            ...tab,
-            active: tab.no === index
-        }));
-        setTabs(newTabs);
-        setSelectTab(index);
+        const index = datas.findIndex((e) => e.no === no);
+        console.log(index);
+
+        if (index !== -1) {
+            setActiveIndex(index);
+        }
     }
 
     return (
         <div className={Tab_Box}>
            <Tabs 
-                tabs={tabs} 
-                setSelectTab={clickTab}/>
-           <TabView contents={tabs.find(tab => tab.no === selectTab)?.contents || '내용 없음'}/>
+                selectTab={selectTab}
+                tabs={datas.map((e, i) => {
+                    const {contents, ...rest} = e;
+
+                    if(i === activeIndex) {
+                        rest.active = true;
+                    }
+                    return rest;
+                })}
+                />
+           <TabView contents={datas[activeIndex].contents}/>
         </div>
     );
 }
