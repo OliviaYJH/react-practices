@@ -1,28 +1,30 @@
-package tabbox.exception;
+package ajax.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.MessageFormat;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public String handlerNoHandlerFoundException(Exception e) {
-		return "index";
+	public String handlerNoHandlerFoundException(HttpServletRequest request) throws Exception {
+		return MessageFormat.format("forward:{0}",
+				request.getHeader("accept").matches(".*application/json.*") ? "/error/404" : "/");
 	}
 
 	@ExceptionHandler(NoResourceFoundException.class)
-	public void handlerNoResourceFoundException(HttpServletResponse response, Exception e) throws Throwable {
+	public void handlerNoResourceFoundException(HttpServletResponse response) throws Throwable {
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -30,14 +32,14 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public void handler(HttpServletRequest request, HttpServletResponse response, Exception e) throws Throwable {
+	public String handler(HttpServletRequest request, Exception e) throws Exception {
 		// logging
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
-		//log.error(errors.toString());
-		
-		// forwarding to WhitelabelErrorController(through DispatcherServlet)
+		log.error(errors.toString());
+
+		// forward to error.WhitelabelController
 		request.setAttribute("errors", errors.toString());
-		request.getRequestDispatcher("/error/500").forward(request, response);
+		return "forward:/error/500";
 	}
 }
