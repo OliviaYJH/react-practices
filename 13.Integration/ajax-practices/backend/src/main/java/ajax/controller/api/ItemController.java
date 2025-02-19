@@ -3,7 +3,6 @@ package ajax.controller.api;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,8 +22,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ajax.domain.Item;
 import ajax.dto.JsonResult;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "ItemController", description = "Item APIs")
 @Slf4j
 @RestController
 @RequestMapping("/item")
@@ -34,6 +40,11 @@ public class ItemController {
 	public ItemController(@Qualifier("items") List<Item> items) {
 		this.items = items;
 	}
+
+	@Operation(summary = "Create a New Item")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = JsonResult.class))),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = JsonResult.class))) })
 
 	@PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<JsonResult<Item>> create(Item item, MultipartFile file) {
