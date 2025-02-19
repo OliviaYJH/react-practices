@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardList from './CardList';
 import './assets/scss/KanbanBoard.scss';
-import datas from './assets/json/data.js';
+import axios from 'axios';
 
 function KanbanBoard() {
-    const [cards, setCards] = useState(datas);
+    const [cards, setCards] = useState([]);
+
+    const fetchCards = async () => {
+        try {
+            const response = await axios.get(`/kanbanboard/card`);
+            const jsonResult = response.data;
+
+            setCards(jsonResult.data);        
+        } catch(err) {
+            console.error(err.response ? `${err.response.status} ${err.response.data.message}` : err);
+        }
+    }
+
+    useEffect(() => {
+        fetchCards();
+    }, []);
 
     return (
         <div className={'Kanban_Board'}>
